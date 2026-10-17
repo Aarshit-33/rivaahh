@@ -1,0 +1,833 @@
+/* The contact page's writing desk (follows the Stitch "interactive writing desk"). */
+
+.desk {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+
+/* ───────── Accessories ───────── */
+
+.tools {
+  display: grid;
+  gap: 22px;
+  padding-top: 8px;
+}
+
+.calendar {
+  width: 200px;
+}
+
+.countdown {
+  margin: 4px 0 0;
+  font-family: var(--hand);
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--maroon);
+  text-align: center;
+}
+
+.toolLabel {
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a6a38;
+}
+
+.stamps {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  perspective: 600px;
+}
+
+.stamp {
+  display: grid;
+  gap: 6px;
+  min-height: 64px;
+  padding: 8px;
+  border: 0;
+  border-radius: 3px;
+  background:
+    radial-gradient(circle, transparent 2.2px, #fbf6ec 2.4px) -4px -4px / 8px 8px,
+    #fbf6ec;
+  /* Perforated edge: a dotted outline cut into the paper. */
+  outline: 1.5px dotted rgba(138, 106, 56, 0.55);
+  outline-offset: -3px;
+  box-shadow: 0 6px 12px -8px rgba(70, 40, 20, 0.5);
+  text-align: left;
+  cursor: pointer;
+  opacity: 0.86;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s,
+    opacity 0.2s;
+}
+
+.stamp:hover,
+.stamp:focus-visible {
+  opacity: 1;
+  transform: translateY(-3px) rotateX(10deg);
+  box-shadow: 0 14px 18px -10px rgba(70, 40, 20, 0.55);
+}
+
+.stampOn {
+  opacity: 1;
+  box-shadow:
+    0 0 0 2px var(--maroon),
+    0 10px 16px -10px rgba(70, 40, 20, 0.55);
+}
+
+.stampTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--serif);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.stampIcon {
+  display: inline-grid;
+  place-items: center;
+  width: 14px;
+  height: 14px;
+  font-size: 12px;
+  color: #966e41;
+}
+
+.stampIcon svg {
+  width: 13px;
+  height: 13px;
+}
+
+.stampLabel {
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.telephone {
+  width: 190px;
+  margin-top: 8px;
+  padding-left: 40px;
+}
+
+/* ───────── The letter ───────── */
+
+.letterStage {
+  perspective: 1400px;
+  min-width: 0;
+}
+
+.letter {
+  position: relative;
+  padding: 32px 36px 22px 64px;
+  border-radius: 14px;
+  background-color: #faf6ee;
+  background-image:
+    linear-gradient(90deg, transparent 46px, rgba(195, 75, 75, 0.42) 46px, rgba(195, 75, 75, 0.42) 47.5px, transparent 47.5px),
+    repeating-linear-gradient(transparent, transparent 47px, rgba(185, 170, 155, 0.35) 47px, rgba(185, 170, 155, 0.35) 48px);
+  box-shadow:
+    rgba(70, 40, 20, 0.22) 0 16px 36px -8px,
+    rgba(0, 0, 0, 0.06) 0 3px 10px,
+    rgba(180, 160, 140, 0.35) 0 0 0 1px;
+  rotate: -1.5deg;
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+/* Tea-stained wash and the archival double border. */
+.stain {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  background:
+    radial-gradient(transparent 55%, rgba(150, 95, 45, 0.22) 90%, rgba(115, 65, 25, 0.36) 100%),
+    radial-gradient(circle at 25% 30%, rgba(218, 175, 115, 0.26) 0%, transparent 45%),
+    radial-gradient(circle at 78% 72%, rgba(195, 140, 80, 0.28) 0%, transparent 40%);
+  pointer-events: none;
+}
+
+.frameA,
+.frameB {
+  position: absolute;
+  pointer-events: none;
+}
+
+.frameA {
+  inset: 12px;
+  border: 1px solid rgba(150, 110, 65, 0.35);
+  border-radius: 10px;
+}
+
+.frameB {
+  inset: 15px;
+  border: 1px dashed rgba(150, 110, 65, 0.2);
+  border-radius: 8px;
+}
+
+.letterHead {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.greeting {
+  margin: 0 0 4px;
+  font-family: var(--hand);
+  font-size: clamp(38px, 3.4vw, 46px);
+  font-weight: 700;
+  line-height: 1.05;
+  color: #581825;
+}
+
+.addressee {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #845c2c;
+}
+
+.addressee span {
+  width: 24px;
+  height: 1px;
+  background: rgba(147, 108, 62, 0.45);
+}
+
+/* Stamp slot with a postal cancellation mark. */
+.stampSlot {
+  position: relative;
+  flex: none;
+  width: 84px;
+  height: 100px;
+}
+
+.postmark {
+  position: absolute;
+  top: 6px;
+  left: -46px;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 70px;
+  height: 70px;
+  border: 1.5px solid rgba(88, 24, 37, 0.45);
+  border-radius: 50%;
+  font-family: var(--sans);
+  color: #581825;
+  rotate: -12deg;
+  opacity: 0.8;
+}
+
+.postmark b {
+  font-size: 7px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  align-self: end;
+}
+
+.postmark i {
+  font-family: var(--serif);
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.postmark span {
+  width: 36px;
+  height: 1px;
+  background: rgba(88, 24, 37, 0.4);
+}
+
+.postmark small {
+  font-size: 5.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  align-self: start;
+}
+
+.slotStamp {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: space-between;
+  padding: 8px;
+  border-radius: 2px;
+  background:
+    radial-gradient(rgba(88, 24, 37, 0.12) 1px, transparent 1px) 0 0 / 6px 6px,
+    #f3e3c3;
+  outline: 2px dotted rgba(138, 106, 56, 0.6);
+  outline-offset: -3px;
+  box-shadow: 0 6px 12px -6px rgba(70, 40, 20, 0.45);
+}
+
+.slotCaption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 13px;
+  font-weight: 600;
+  color: #3b2316;
+}
+
+.slotPost {
+  font-size: 6px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #845c2c;
+}
+
+.aboutChip {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 8px;
+  padding: 4px 6px 4px 12px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 99px;
+  background: rgba(251, 246, 236, 0.9);
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.aboutChip strong {
+  color: var(--maroon);
+}
+
+.aboutChip button {
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  font-size: 16px;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+/* The fill-in sentence, written along the ruled lines. */
+.sentence {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--hand);
+  font-size: clamp(23px, 2vw, 27px);
+  line-height: 48px;
+  color: #2a1e1a;
+}
+
+.blank {
+  min-width: 6ch;
+  max-width: 100%;
+  margin: 0 2px;
+  padding: 0 4px;
+  border: 0;
+  border-bottom: 1.5px dotted #b08d57;
+  border-radius: 0;
+  background: transparent;
+  font: inherit;
+  font-weight: 700;
+  color: #4a1525;
+  field-sizing: content;
+  vertical-align: baseline;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+}
+
+.blank::placeholder,
+.ph {
+  color: rgba(74, 21, 37, 0.42);
+  font-weight: 600;
+}
+
+.blank:hover {
+  background: rgba(243, 220, 174, 0.25);
+}
+
+.blank:focus,
+.blank:focus-visible {
+  outline: none;
+  border-bottom: 2px solid var(--maroon);
+  background: rgba(107, 30, 46, 0.05);
+}
+
+.blankError {
+  border-bottom: 2px solid #a3283b;
+}
+
+.select {
+  appearance: none;
+  padding-right: 6px;
+  cursor: pointer;
+}
+
+.dateWrap {
+  position: relative;
+  display: inline-block;
+}
+
+.dateBtn,
+.topicBtn {
+  cursor: pointer;
+}
+
+.dateNative {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.channels {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 4px;
+  padding: 0 6px;
+  border-radius: 99px;
+  background: rgba(243, 220, 174, 0.3);
+  font-size: 0.82em;
+}
+
+.channel {
+  padding: 0 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  color: rgba(92, 75, 66, 0.7);
+  cursor: pointer;
+}
+
+.channelOn {
+  font-weight: 700;
+  color: #581825;
+}
+
+.slash {
+  margin: 0 2px;
+  color: rgba(147, 108, 62, 0.7);
+}
+
+.errors {
+  position: relative;
+  z-index: 1;
+  min-height: 8px;
+}
+
+.errors p {
+  margin: 4px 0 0;
+  font-family: var(--hand);
+  font-size: 19px;
+  color: #a3283b;
+}
+
+.ps {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(150, 110, 65, 0.25);
+}
+
+.ps label {
+  flex: none;
+  padding-top: 2px;
+  font-family: var(--hand);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.ps textarea {
+  flex: 1;
+  min-height: 56px;
+  padding: 2px 4px;
+  border: 0;
+  background: transparent;
+  font-family: var(--hand);
+  font-size: 21px;
+  line-height: 1.35;
+  color: #4a1525;
+  resize: none;
+  field-sizing: content;
+}
+
+.ps textarea::placeholder {
+  color: rgba(74, 21, 37, 0.4);
+}
+
+.ps textarea:focus {
+  outline: none;
+  background: rgba(107, 30, 46, 0.04);
+}
+
+.letterFoot {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 12px;
+}
+
+.send {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--maroon);
+  box-shadow: 0 10px 24px -12px rgba(107, 30, 46, 0.7);
+  font: 700 12px var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--paper);
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    transform 0.2s;
+}
+
+.send:hover {
+  background: var(--maroon-deep);
+  transform: translateY(-2px);
+}
+
+.send:active {
+  transform: scale(0.97);
+}
+
+.signature {
+  text-align: right;
+}
+
+.signature p {
+  margin: 0;
+  font-family: var(--hand);
+  font-size: clamp(30px, 2.6vw, 38px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #581825;
+}
+
+.signature span {
+  display: block;
+  margin-top: 2px;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #845c2c;
+}
+
+.footnote {
+  position: relative;
+  z-index: 1;
+  margin: 14px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(150, 110, 65, 0.2);
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  color: #6b4c3b;
+  text-align: center;
+}
+
+/* ───────── After sending: the sealed envelope ───────── */
+
+.sealed {
+  display: grid;
+  justify-items: center;
+  gap: 28px;
+  padding: 24px 0 8px;
+  transform-origin: 50% 100%;
+}
+
+.envelope {
+  position: relative;
+  width: min(100%, 440px);
+  rotate: -2deg;
+  filter: drop-shadow(0 26px 30px rgba(70, 40, 20, 0.28));
+}
+
+.sealDrop {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  translate: -50% -50%;
+}
+
+.fleck {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 7px;
+  height: 7px;
+  margin: -3.5px 0 0 -3.5px;
+  border-radius: 50%;
+  background: #d9b97a;
+}
+
+.sealedCopy {
+  max-width: 34em;
+  text-align: center;
+}
+
+.sealedTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(28px, 2.6vw, 36px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--ink);
+  outline: none;
+}
+
+.sealedTitle em {
+  font-style: italic;
+  color: var(--maroon);
+}
+
+.sealedText {
+  margin: 12px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.sealedActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 12px 22px;
+  margin-top: 22px;
+}
+
+.textBtn {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font: 700 12px var(--sans);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--maroon);
+  cursor: pointer;
+}
+
+/* ───────── Smaller screens: the letter first, the tools below it ───────── */
+
+@media (max-width: 1279px) {
+  .desk {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .letterStage {
+    order: -1;
+  }
+
+  .tools {
+    grid-template-columns: repeat(3, auto);
+    justify-content: center;
+    align-items: start;
+    gap: 28px;
+  }
+}
+
+@media (max-width: 767px) {
+  .letter {
+    padding: 24px 18px 18px 40px;
+    rotate: 0deg;
+    background-image:
+      linear-gradient(90deg, transparent 28px, rgba(195, 75, 75, 0.42) 28px, rgba(195, 75, 75, 0.42) 29.5px, transparent 29.5px),
+      repeating-linear-gradient(transparent, transparent 43px, rgba(185, 170, 155, 0.35) 43px, rgba(185, 170, 155, 0.35) 44px);
+  }
+
+  .sentence {
+    font-size: 22px;
+    line-height: 44px;
+  }
+
+  .stampSlot {
+    width: 66px;
+    height: 80px;
+  }
+
+  .postmark {
+    display: none;
+  }
+
+  .letterFoot {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .send {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .tools {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    justify-content: stretch;
+  }
+
+  .calendar {
+    width: 100%;
+  }
+
+  .telephone {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp,
+  .send {
+    transition: none;
+  }
+}
+
+/* ───────── The letter's fold wrapper ───────── */
+
+.letterFold {
+  transform-origin: 50% 0%;
+  transform-style: preserve-3d;
+}
+
+/* ───────── The ringing desk telephone ───────── */
+
+.telephone {
+  position: relative;
+}
+
+/* The handset (the only <g> in the telephone drawing) jiggles in short
+   bursts. `rotate` adds to the drawing's own transform instead of replacing it. */
+.telephone :global(.rotary svg > g) {
+  transform-box: fill-box;
+  transform-origin: 50% 80%;
+  animation: handset-ring 3s ease-in-out infinite;
+}
+
+.ringWaves {
+  position: absolute;
+  z-index: 2;
+  top: -18px;
+  right: -18px;
+  width: 40px;
+  height: 40px;
+  color: #b08d57;
+  pointer-events: none;
+}
+
+.ringWaves svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.waveA,
+.waveB {
+  opacity: 0;
+  animation: ring-wave 3s ease-out infinite;
+}
+
+.waveA {
+  color: var(--maroon);
+}
+
+.waveB {
+  animation-delay: 0.12s;
+}
+
+@keyframes handset-ring {
+  0%,
+  50%,
+  100% {
+    rotate: 0deg;
+    translate: 0 0;
+  }
+  4%,
+  14%,
+  24%,
+  34% {
+    rotate: -9deg;
+    translate: 0 -5px;
+  }
+  9%,
+  19%,
+  29%,
+  39% {
+    rotate: 9deg;
+    translate: 0 -5px;
+  }
+  45% {
+    rotate: 0deg;
+    translate: 0 -1px;
+  }
+}
+
+@keyframes ring-wave {
+  0%,
+  100% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  5%,
+  40% {
+    opacity: 1;
+    translate: 2px -2px;
+  }
+  50% {
+    opacity: 0;
+    translate: 5px -5px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .telephone :global(.rotary svg > g),
+  .waveA,
+  .waveB {
+    animation: none;
+  }
+
+  .waveA,
+  .waveB {
+    opacity: 0.8;
+  }
+}

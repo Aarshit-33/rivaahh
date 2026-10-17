@@ -1,0 +1,540 @@
+/* The stage: a flat field in the template's own darkest colour, lit by one
+   soft lamp, with the laptop and the phone standing on it. Device positions
+   are computed from the stage's own size (it is a size container). */
+
+.stage {
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --on-field: rgba(251, 246, 236, 0.82);
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--field);
+  transition: background-color 0.8s var(--ease);
+  container-type: size;
+  isolation: isolate;
+}
+
+.light {
+  --on-field: var(--ink);
+}
+
+.glow {
+  position: absolute;
+  inset: 8% -10% 0;
+  z-index: -1;
+  background: radial-gradient(closest-side at 50% 48%, rgba(243, 199, 122, 0.2), rgba(243, 199, 122, 0.07) 55%, rgba(243, 199, 122, 0));
+  pointer-events: none;
+}
+
+.light .glow {
+  background: radial-gradient(closest-side at 50% 48%, rgba(243, 199, 122, 0.34), rgba(243, 199, 122, 0));
+}
+
+.grain {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.16;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.55  0 0 0 0 0.42  0 0 0 0 0.3  0 0 0 0.9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  pointer-events: none;
+}
+
+.light .grain {
+  opacity: 0.4;
+  mix-blend-mode: multiply;
+}
+
+/* ───────── Skip link & caption ───────── */
+
+.skip {
+  position: absolute;
+  z-index: 6;
+  top: 104px;
+  left: 50%;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--maroon);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  translate: -50% 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.skip:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.caption {
+  position: absolute;
+  z-index: 4;
+  top: 104px;
+  left: clamp(32px, 4vw, 64px);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--on-field);
+}
+
+.captionDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #e3c58c;
+  box-shadow: 0 0 0 3px rgba(227, 197, 140, 0.18);
+}
+
+.light .captionDot {
+  background: var(--maroon);
+  box-shadow: 0 0 0 3px rgba(107, 30, 46, 0.12);
+}
+
+/* ───────── Devices ───────── */
+
+.stage {
+  --safe: clamp(32px, 4vw, 64px);
+  --top: 136px;
+  --bottom: 112px;
+}
+
+.slot {
+  position: absolute;
+  z-index: 2;
+}
+
+/* Both: the laptop back-left, the phone forward over its lower-right corner. */
+.laptopSlot {
+  --u: min(100cqw - 2 * var(--safe), (100cqh - var(--top) - var(--bottom)) / 0.64);
+  left: calc((100cqw - var(--u)) / 2);
+  top: calc(var(--top) + (100cqh - var(--top) - var(--bottom) - 0.64 * var(--u)) / 2);
+  width: calc(0.72 * var(--u));
+  filter: drop-shadow(0 50px 50px rgba(20, 8, 4, 0.35));
+}
+
+.phoneSlot {
+  --u: min(100cqw - 2 * var(--safe), (100cqh - var(--top) - var(--bottom)) / 0.64);
+  z-index: 3;
+  left: calc((100cqw - var(--u)) / 2 + 0.66 * var(--u));
+  top: calc(var(--top) + (100cqh - var(--top) - var(--bottom) - 0.64 * var(--u)) / 2 + 0.03 * var(--u));
+  width: calc(0.28 * var(--u));
+}
+
+/* Phone: the phone large and centred, the laptop slides off to the left. */
+.stage[data-view='phone'] .phoneSlot {
+  --ph: min(76cqh, 100cqh - 250px);
+  left: calc(50cqw - var(--ph) * 9 / 39);
+  top: calc(50cqh - var(--ph) / 2 + 22px);
+  width: calc(var(--ph) * 9 / 19.5);
+}
+
+.stage[data-view='phone'] .laptopSlot {
+  left: calc(-0.72 * var(--u) - 60px);
+}
+
+/* Laptop: the laptop large and centred, the phone slides off to the right. */
+.stage[data-view='laptop'] .laptopSlot {
+  --lw: min(100cqw - 2 * var(--safe), (100cqh - var(--top) - var(--bottom) + 40px) / 0.675);
+  left: calc(50cqw - var(--lw) / 2);
+  top: calc(50cqh - var(--lw) * 0.3375 + 6px);
+  width: var(--lw);
+}
+
+.stage[data-view='laptop'] .phoneSlot {
+  left: calc(100cqw + 60px);
+}
+
+/* The mirrored copy is moved only by the master: a wheel over it scrolls the
+   page, never the copy. */
+.follower :global(.inv-scroll) {
+  overflow: hidden;
+  overscroll-behavior: auto;
+}
+
+.tilt {
+  transform: perspective(1600px) rotateY(8deg);
+  transform-origin: 50% 60%;
+  transition: transform 0.6s var(--ease);
+  filter: drop-shadow(0 50px 40px rgba(20, 8, 4, 0.45));
+}
+
+.phoneSlot:hover .tilt,
+.phoneSlot:focus-within .tilt {
+  transform: perspective(1600px) rotateY(0deg) translateY(-6px);
+}
+
+.stage[data-view='phone'] .tilt,
+.stage[data-view='laptop'] .tilt {
+  transform: none;
+}
+
+.phoneScreen {
+  background: var(--parchment);
+}
+
+/* Inside the laptop: the 9:16 invitation at full height, the sides filled by
+   a blurred, darkened, enlarged copy of the same invitation. */
+.lapScreen {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #2a1e1a;
+}
+
+.lapBlur {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 110cqw;
+  aspect-ratio: 9 / 16;
+  translate: -50% -50%;
+  filter: blur(20px) brightness(0.58) saturate(1.1);
+}
+
+.lapInvite {
+  position: relative;
+  height: 100%;
+  aspect-ratio: 9 / 16;
+  margin: 0 auto;
+  box-shadow: 0 0 40px -6px rgba(20, 8, 4, 0.55);
+}
+
+/* ───────── Colourways ───────── */
+
+.swatches {
+  position: absolute;
+  z-index: 4;
+  top: 50%;
+  left: 14px;
+  display: grid;
+  gap: 4px;
+  translate: 0 -50%;
+}
+
+.swatch {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  cursor: pointer;
+}
+
+.swatch span {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 1.5px rgba(251, 246, 236, 0.5),
+    0 4px 8px -3px rgba(20, 8, 4, 0.5);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s;
+}
+
+.light .swatch span {
+  box-shadow:
+    0 0 0 1.5px rgba(42, 30, 26, 0.3),
+    0 4px 8px -3px rgba(70, 40, 20, 0.4);
+}
+
+.swatch:hover span {
+  transform: scale(1.12);
+}
+
+.swatch[aria-pressed='true'] span {
+  box-shadow:
+    0 0 0 2px var(--field),
+    0 0 0 4px #e3c58c;
+}
+
+.light .swatch[aria-pressed='true'] span {
+  box-shadow:
+    0 0 0 2px var(--field),
+    0 0 0 4px var(--maroon);
+}
+
+/* ───────── Control bar ───────── */
+
+.bar {
+  position: absolute;
+  z-index: 5;
+  bottom: 32px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px;
+  border-radius: 99px;
+  background: rgba(251, 246, 236, 0.92);
+  box-shadow: 0 18px 34px -18px rgba(20, 8, 4, 0.6);
+  translate: -50% 0;
+  white-space: nowrap;
+}
+
+.views {
+  display: flex;
+  margin-right: 4px;
+  padding: 0;
+  border-radius: 99px;
+  background: rgba(176, 141, 87, 0.14);
+}
+
+.view {
+  position: relative;
+  min-width: 70px;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 99px;
+  background: none;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.view[aria-pressed='true'] {
+  color: var(--paper);
+}
+
+.viewPill {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: var(--maroon);
+}
+
+.viewLabel {
+  position: relative;
+}
+
+.ctl {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 0;
+  border-radius: 99px;
+  background: none;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.ctl:hover {
+  background: rgba(176, 141, 87, 0.16);
+  color: var(--maroon);
+}
+
+.icon {
+  padding: 0;
+}
+
+.chip {
+  display: none;
+}
+
+.hair {
+  width: 1px;
+  height: 24px;
+  margin: 0 4px;
+  background: rgba(176, 141, 87, 0.45);
+}
+
+.full {
+  color: var(--maroon);
+}
+
+/* ───────── Tablet ───────── */
+
+@media (max-width: 1199px) {
+  .view {
+    min-width: 58px;
+    padding: 0 10px;
+  }
+
+  .restart .ctlText {
+    display: none;
+  }
+}
+
+/* Portrait tablets: a full-width band. The laptop takes about 58% of the
+   width with the phone over its right edge; nothing reaches the bar. */
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+  .stage {
+    --top: 132px;
+    --bottom: 112px;
+  }
+
+  .laptopSlot,
+  .phoneSlot {
+    --u: min(80cqw, 100cqw - 2 * var(--safe), (100cqh - var(--top) - var(--bottom)) / 0.64);
+  }
+
+  .stage[data-view='phone'] .phoneSlot {
+    --ph: calc(100cqh - var(--top) - var(--bottom));
+    top: var(--top);
+  }
+
+  .stage[data-view='laptop'] .laptopSlot {
+    --lw: min(100cqw - 2 * var(--safe), (100cqh - var(--top) - var(--bottom)) / 0.675);
+    top: calc(var(--top) + (100cqh - var(--top) - var(--bottom) - var(--lw) * 0.675) / 2);
+  }
+
+  /* The cream sheet overlaps the band by 24px. */
+  .bar {
+    bottom: 44px;
+  }
+
+  .view {
+    min-width: 66px;
+    padding: 0 14px;
+  }
+
+  .restart .ctlText {
+    display: inline;
+  }
+}
+
+/* ───────── Phone: its own composition ───────── */
+
+@media (max-width: 767px) {
+  .stage {
+    --top: 78px;
+    --bottom: 92px;
+  }
+
+  .caption,
+  .views,
+  .hair {
+    display: none;
+  }
+
+  .chip {
+    display: inline-flex;
+  }
+
+  .tilt,
+  .phoneSlot:hover .tilt {
+    transform: none;
+    filter: drop-shadow(0 30px 28px rgba(20, 8, 4, 0.45));
+  }
+
+  /* No phone frame: the visitor is already holding one. */
+  .stage .phoneSlot,
+  .stage[data-view='phone'] .phoneSlot {
+    --ph: calc(100cqh - var(--top) - var(--bottom));
+    left: calc(50cqw - var(--ph) * 9 / 32);
+    top: var(--top);
+    width: calc(var(--ph) * 9 / 16);
+  }
+
+  .phoneSlot :global(.pp-phone) {
+    aspect-ratio: 9 / 16;
+  }
+
+  .phoneSlot :global(.pp-phone-body),
+  .phoneSlot :global(.pp-phone-speaker) {
+    display: none;
+  }
+
+  .phoneSlot :global(.pp-phone-screen) {
+    inset: 0;
+    border-radius: 14px;
+  }
+
+  /* A finger on the invitation scrolls the page, not the invitation: the
+     programme rows and the full-screen demo move it instead. */
+  .phoneSlot :global(.inv-scroll) {
+    overflow: hidden;
+    overscroll-behavior: auto;
+  }
+
+  .stage .laptopSlot,
+  .stage[data-view='phone'] .laptopSlot {
+    --lw: calc(100cqw - 32px);
+    left: calc(-100cqw);
+    top: calc(var(--top) + (100cqh - var(--top) - var(--bottom) - var(--lw) * 0.675) / 2);
+    width: var(--lw);
+  }
+
+  .stage[data-view='laptop'] .laptopSlot {
+    --lw: calc(100cqw - 32px);
+    left: 16px;
+    top: calc(var(--top) + (100cqh - var(--top) - var(--bottom) - var(--lw) * 0.675) / 2);
+    width: var(--lw);
+  }
+
+  .stage[data-view='laptop'] .phoneSlot {
+    left: calc(100cqw + 40px);
+  }
+
+  .swatches {
+    top: auto;
+    bottom: 128px;
+    left: auto;
+    right: 6px;
+    translate: none;
+  }
+
+  .stage[data-view='laptop'] .swatches {
+    display: none;
+  }
+
+  .bar {
+    bottom: 34px;
+    gap: 2px;
+    padding: 4px;
+  }
+
+  .ctlText {
+    display: none;
+  }
+
+  .chip span {
+    display: inline;
+  }
+
+  .full {
+    background: var(--maroon);
+    color: var(--paper);
+  }
+
+  .full:hover {
+    background: var(--maroon-deep);
+    color: var(--paper);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage,
+  .tilt,
+  .swatch span {
+    transition: none;
+  }
+}
+
+.light .lapBlur {
+  filter: blur(20px) brightness(0.86) saturate(1.15);
+}
+
+.light .lapScreen {
+  background: #d9c9ac;
+}

@@ -1,0 +1,292 @@
+/* ───────── Floating nav ───────── */
+
+.nav {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  z-index: 50;
+  width: min(calc(100% - 2 * var(--gutter) + 24px), 1240px);
+  translate: -50% 0;
+  border: 1px solid rgba(176, 141, 87, 0.38);
+  border-radius: 22px;
+  background: rgba(251, 246, 236, 0.72);
+  backdrop-filter: blur(14px) saturate(1.2);
+  -webkit-backdrop-filter: blur(14px) saturate(1.2);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 14px 34px -22px rgba(70, 40, 20, 0.45);
+  transition:
+    top 0.4s ease,
+    width 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+.nav.is-scrolled {
+  top: 10px;
+  width: min(calc(100% - 2 * var(--gutter) + 24px), 1120px);
+  background: rgba(251, 246, 236, 0.9);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.6) inset,
+    0 18px 40px -20px rgba(70, 40, 20, 0.5);
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  height: 58px;
+  padding: 0 8px 0 14px;
+  transition: height 0.4s ease;
+}
+
+.nav.is-scrolled .nav-bar {
+  height: 52px;
+}
+
+.nav .seal {
+  width: 32px;
+  height: 32px;
+  font-size: 16px;
+}
+
+.nav .wordmark {
+  font-size: 24px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2px;
+}
+
+.nav-links a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  height: 38px;
+  padding: 0 16px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted);
+  transition: color 0.25s;
+}
+
+.nav-links a:hover,
+.nav-links a:focus-visible {
+  color: var(--maroon);
+}
+
+.nav-hover {
+  position: absolute;
+  inset: 0;
+  border-radius: 99px;
+  background: rgba(176, 141, 87, 0.16);
+}
+
+.nav-label {
+  position: relative;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-cta {
+  min-height: 42px;
+  border-radius: 14px;
+}
+
+/* Outline while the hero's own primary button is on screen, solid after. */
+.nav .nav-cta {
+  border: 1.5px solid var(--maroon);
+  background: transparent;
+  color: var(--maroon);
+  box-shadow: none;
+}
+
+.nav .nav-cta:hover,
+.nav.is-solid .nav-cta {
+  background: var(--maroon);
+  color: var(--paper);
+}
+
+.nav-toggle {
+  display: none;
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 14px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  border-radius: 1px;
+  background: var(--maroon);
+  transition: transform 0.3s ease;
+}
+
+.nav.is-open .nav-toggle span:first-child {
+  transform: translateY(3.25px) rotate(45deg);
+}
+
+.nav.is-open .nav-toggle span:last-child {
+  transform: translateY(-3.25px) rotate(-45deg);
+}
+
+/* While the menu is open the bar melts into the sheet behind it. */
+.nav.is-open {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.nav.is-open .nav-toggle {
+  background: var(--paper);
+}
+
+/* ───────── Full-screen mobile menu ───────── */
+
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden auto;
+  padding: 104px var(--gutter) max(28px, env(safe-area-inset-bottom));
+  background:
+    radial-gradient(80% 50% at 100% 0%, rgba(243, 199, 122, 0.22), rgba(243, 199, 122, 0) 70%),
+    radial-gradient(70% 40% at 0% 100%, rgba(107, 30, 46, 0.08), rgba(107, 30, 46, 0) 70%),
+    var(--cream);
+}
+
+/* A large, faint wax-seal monogram pressed into the paper. */
+.menu-mark {
+  position: absolute;
+  right: -4vw;
+  bottom: 13vh;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 62vw;
+  line-height: 1;
+  color: rgba(107, 30, 46, 0.05);
+  pointer-events: none;
+  user-select: none;
+}
+
+.menu-eyebrow {
+  margin-bottom: 10px;
+}
+
+.menu-links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.menu-links li {
+  overflow: hidden;
+  border-bottom: 1px solid rgba(176, 141, 87, 0.3);
+}
+
+.menu-links a {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 0 14px;
+  text-decoration: none;
+}
+
+.menu-label {
+  font-family: var(--serif);
+  font-size: clamp(34px, 10vw, 46px);
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.menu-links a:active .menu-label,
+.menu-links a:focus-visible .menu-label {
+  font-style: italic;
+  color: var(--maroon);
+}
+
+.menu-note {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.menu-foot {
+  position: relative;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+.menu-foot .btn {
+  display: flex;
+  width: 100%;
+}
+
+.menu-foot p {
+  margin: 14px 0 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #8a6a38;
+}
+
+@media (max-width: 900px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-toggle {
+    display: grid;
+  }
+}
+
+@media (max-width: 767px) {
+  .nav {
+    top: 10px;
+    width: calc(100% - 20px);
+    border-radius: 18px;
+  }
+
+  .nav.is-scrolled {
+    top: 8px;
+    width: calc(100% - 20px);
+  }
+
+  .nav-bar,
+  .nav.is-scrolled .nav-bar {
+    height: 54px;
+    padding: 0 6px 0 10px;
+  }
+
+  .nav .wordmark {
+    font-size: 21px;
+  }
+
+  /* The hero and the menu already carry the action on phones. */
+  .nav-cta {
+    display: none;
+  }
+}

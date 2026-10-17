@@ -1,0 +1,134 @@
+/* The split: the stage (sticky, 56%) and the karyakram column (44%).
+   The colour change is the edge; there is no divider line. */
+
+.split {
+  display: grid;
+  grid-template-columns: 56fr 44fr;
+  align-items: start;
+  padding-bottom: 96px;
+  background: var(--cream);
+}
+
+.stage {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+}
+
+.column {
+  --col-pad: clamp(32px, 4.5vw, 72px);
+  min-width: 0;
+  padding: clamp(120px, 16vh, 150px) var(--col-pad) 0;
+}
+
+/* Landscape tablets: the split stays, a little wider on the reading side. */
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: landscape) {
+  .split {
+    grid-template-columns: 52fr 48fr;
+  }
+}
+
+/* Portrait tablets: the stage is a full-width band first (sticky behind),
+   then the programme on a cream sheet that slides up over it. */
+@media (min-width: 768px) and (max-width: 1199px) and (orientation: portrait) {
+  .split {
+    display: block;
+    padding-bottom: 0;
+  }
+
+  .stage {
+    z-index: 0;
+    height: 66vh;
+    height: 66svh;
+  }
+
+  .column {
+    --col-pad: clamp(32px, 6vw, 64px);
+    position: relative;
+    z-index: 1;
+    margin-top: -24px;
+    padding: 56px var(--col-pad) 136px;
+    border-radius: 22px 22px 0 0;
+    background: var(--cream);
+    box-shadow: 0 -18px 30px -24px rgba(20, 8, 4, 0.45);
+  }
+
+  /* "From you to every guest" beside "The details" when there is room; the
+     short slip stays in view while the details scroll past. */
+  .pair {
+    container-type: inline-size;
+  }
+
+  @container (min-width: 820px) {
+    .pairGrid {
+      display: grid;
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+      gap: 0 48px;
+      align-items: start;
+    }
+
+    .pairGrid > :first-child {
+      position: sticky;
+      top: 104px;
+    }
+  }
+}
+
+/* Phones: the stage first (64svh, sticky behind), then a cream sheet that
+   slides up over its bottom edge. */
+@media (max-width: 767px) {
+  .split {
+    display: block;
+    padding-bottom: 0;
+  }
+
+  .stage {
+    z-index: 0;
+    height: 64vh;
+    height: 64svh;
+  }
+
+  .column {
+    position: relative;
+    z-index: 1;
+    margin-top: -24px;
+    padding: 32px 16px 56px;
+    border-radius: 22px 22px 0 0;
+    background: var(--cream);
+    box-shadow: 0 -18px 30px -24px rgba(20, 8, 4, 0.45);
+  }
+}
+
+/* App Shell while a template streams in. */
+.shellStage {
+  background: #3f0e1a;
+}
+
+.shellLine,
+.shellTitle,
+.shellButton {
+  max-width: 46ch;
+  border-radius: 6px;
+  background: rgba(176, 141, 87, 0.16);
+}
+
+.shellLine {
+  height: 14px;
+  margin-top: 16px;
+}
+
+.shellTitle {
+  width: 55%;
+  height: 64px;
+  margin-top: 24px;
+}
+
+.shellButton {
+  height: 52px;
+  margin-top: 16px;
+}
+
+.shellGap {
+  margin-top: 60px;
+}

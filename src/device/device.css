@@ -1,0 +1,95 @@
+/* The one phone that travels from the hero through the life section. */
+
+.device {
+  --bezel: calc(var(--dw, 280px) * 0.036);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 20;
+  width: var(--dw, 280px);
+  aspect-ratio: 9 / 19.5;
+  transform-origin: 0 0;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.dv-glow {
+  position: absolute;
+  inset: -30%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(243, 199, 122, 0.5), rgba(243, 199, 122, 0));
+  filter: blur(12px);
+}
+
+.dv-outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.dv-outline rect {
+  fill: none;
+  stroke: #d9b97a;
+  stroke-width: 0.7;
+  stroke-dasharray: 1 1;
+  filter: drop-shadow(0 0 6px rgba(243, 199, 122, 0.9));
+}
+
+.dv-make-wrap {
+  position: absolute;
+  inset: 0;
+}
+
+.dv-make {
+  justify-content: center;
+  gap: 6cqw;
+  padding: 10cqw 8cqw;
+  perspective: 900px;
+}
+
+.dv-make-card {
+  width: 100%;
+}
+
+.dv-make-card .ia {
+  box-shadow: 0 16px 30px -18px rgba(60, 25, 15, 0.6);
+}
+
+.dv-make .make-rsvp {
+  width: 100%;
+  gap: 2.5cqw;
+}
+
+.dv-make .make-rsvp span {
+  min-height: 12cqw;
+  font-size: 4cqw;
+}
+
+/* The bezel is a ring, not a slab: until the screen fills in, the hero's
+   particles behind the phone stay visible through it as they land. */
+.dv-body {
+  position: absolute;
+  inset: 0;
+  border: var(--bezel) solid #1f1714;
+  border-radius: 13% / 6%;
+  box-shadow:
+    0 40px 70px -30px rgba(60, 25, 15, 0.55),
+    inset 0 0 0 1.5px rgba(217, 185, 122, 0.35);
+}
+
+.dv-screen {
+  position: absolute;
+  inset: var(--bezel);
+  overflow: hidden;
+  border-radius: 10.5% / 4.9%;
+  background: var(--paper);
+  container-type: inline-size;
+  pointer-events: auto;
+}
+
+.dv-content {
+  position: absolute;
+  inset: 0;
+}

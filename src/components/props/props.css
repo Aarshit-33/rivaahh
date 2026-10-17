@@ -1,0 +1,241 @@
+/* Shared props. Values match the home hero (device.css, styles.css) so the
+   phone, calendar, envelope and telephone look the same on every page. */
+
+/* ───────── Phone ───────── */
+
+.pp-phone {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 19.5;
+  container-type: inline-size;
+}
+
+.pp-phone-body {
+  position: absolute;
+  inset: 0;
+  border: 3.6cqw solid #1f1714;
+  border-radius: 13% / 6%;
+  box-shadow:
+    0 40px 70px -30px rgba(60, 25, 15, 0.55),
+    inset 0 0 0 1.5px rgba(217, 185, 122, 0.35);
+  pointer-events: none;
+}
+
+.pp-phone-screen {
+  position: absolute;
+  inset: 3.6cqw;
+  overflow: hidden;
+  border-radius: 10.5% / 4.9%;
+  background: var(--paper);
+  container-type: size;
+}
+
+.pp-phone-speaker {
+  position: absolute;
+  z-index: 3;
+  top: 5.2cqw;
+  left: 50%;
+  width: 22cqw;
+  height: 5.4cqw;
+  translate: -50% 0;
+  border-radius: 99px;
+  background: #1f1714;
+  pointer-events: none;
+}
+
+/* ───────── Laptop ───────── */
+
+.pp-laptop {
+  position: relative;
+  width: 100%;
+  container-type: inline-size;
+}
+
+.pp-laptop-lid {
+  padding: 2.2cqw 2.2cqw 3cqw;
+  border-radius: 2.4cqw 2.4cqw 0.6cqw 0.6cqw;
+  background: #1f1714;
+  box-shadow:
+    0 40px 70px -36px rgba(20, 8, 4, 0.6),
+    inset 0 0 0 1.5px rgba(217, 185, 122, 0.3);
+}
+
+.pp-laptop-screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 0.8cqw;
+  background: var(--paper);
+}
+
+.pp-laptop-bar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 0.7cqw;
+  height: 3.6cqw;
+  padding: 0 1.4cqw;
+  background: #efe3cd;
+}
+
+.pp-laptop-bar span {
+  width: 1cqw;
+  height: 1cqw;
+  border-radius: 50%;
+  background: #d6c4a3;
+}
+
+.pp-laptop-bar p {
+  flex: 1;
+  margin: 0 0 0 2cqw;
+  padding: 0.5cqw 1.4cqw;
+  border-radius: 99px;
+  background: rgba(251, 246, 236, 0.9);
+  font-size: 1.3cqw;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pp-laptop-view {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  container-type: size;
+}
+
+.pp-laptop-base {
+  position: relative;
+  height: 2.4cqw;
+  margin: 0 -6%;
+  border-radius: 0 0 3cqw 3cqw;
+  background: linear-gradient(#e6d6bb, #cdb994);
+  box-shadow: 0 24px 40px -22px rgba(20, 8, 4, 0.55);
+}
+
+.pp-laptop-base span {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 16%;
+  height: 0.9cqw;
+  translate: -50% 0;
+  border-radius: 0 0 1cqw 1cqw;
+  background: #b9a37d;
+}
+
+/* ───────── Calendar (same drawing as the hero's) ───────── */
+
+.pp-calendar {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 14px 18px rgba(80, 50, 20, 0.16));
+}
+
+.pp-cal-month {
+  font: 700 13px var(--sans);
+  letter-spacing: 0.3em;
+  fill: var(--maroon);
+}
+
+.pp-cal-date {
+  font: 500 11px var(--sans);
+  fill: #6a5a50;
+}
+
+/* ───────── Envelope ───────── */
+
+.pp-envelope {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+.pp-script {
+  font-family: var(--script);
+  font-size: 26px;
+  fill: #3b2420;
+}
+
+.pp-script--sm {
+  font-size: 21px;
+}
+
+.pp-stamp {
+  font: 700 9px var(--sans);
+  letter-spacing: 0.2em;
+  fill: #f3d9c0;
+}
+
+.pp-stamp--big {
+  font: italic 20px var(--serif);
+  letter-spacing: 0;
+}
+
+/* ───────── Rotary telephone ───────── */
+
+.pp-rotary {
+  position: relative;
+  width: 100%;
+}
+
+.pp-rotary .rotary {
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: 100%;
+}
+
+.pp-rotary .rotary-note {
+  display: none;
+}
+
+.pp-rotary--note .rotary-note {
+  display: block;
+}
+
+/* ───────── Wax seal ───────── */
+
+.pp-seal {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #9b3446, #5b1121 75%);
+  color: #f3d9c0;
+  font-family: var(--serif);
+  font-style: italic;
+  line-height: 1;
+  box-shadow:
+    0 3px 8px rgba(80, 20, 30, 0.35),
+    inset 0 -3px 6px rgba(40, 5, 12, 0.35),
+    inset 0 2px 4px rgba(255, 210, 200, 0.18);
+}
+
+.pp-seal--sm {
+  width: 34px;
+  height: 34px;
+  font-size: 17px;
+}
+
+.pp-seal--md {
+  width: 56px;
+  height: 56px;
+  font-size: 26px;
+}
+
+.pp-seal--lg {
+  width: 72px;
+  height: 72px;
+  font-size: 34px;
+}
+
+.pp-seal--xl {
+  width: 96px;
+  height: 96px;
+  font-size: 44px;
+}

@@ -1,0 +1,320 @@
+/* Shared pieces for the templates pages: sheets, popovers, chips, swatches. */
+
+/* ───────── Sheet ───────── */
+
+.sheetRoot {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(42, 30, 26, 0.7);
+}
+
+.panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: min(560px, 100%);
+  max-height: calc(100dvh - 48px);
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 40px 80px -40px rgba(40, 18, 10, 0.75);
+  outline: none;
+}
+
+.panel.size_lg {
+  width: min(760px, 100%);
+}
+
+.panel.size_wide {
+  width: min(620px, 100%);
+}
+
+.sheet_full {
+  padding: 0;
+}
+
+.sheet_full .panel {
+  width: 100% !important;
+  height: 100%;
+  max-height: none;
+  border: 0;
+  border-radius: 0;
+  background: var(--cream);
+}
+
+.sheet_bottom {
+  place-items: end center;
+  padding: 0;
+}
+
+.sheet_bottom .panel {
+  width: 100% !important;
+  max-height: 86dvh;
+  border-radius: 14px 14px 0 0;
+  border-bottom: 0;
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 14px 6px 24px;
+}
+
+.panelTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.sheet_full .panelHead,
+.sheet_full .panelBody {
+  padding-inline: var(--gutter);
+}
+
+.sheet_full .panelHead {
+  padding-top: 20px;
+  padding-right: calc(var(--gutter) - 12px);
+}
+
+.panelBody {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 8px 24px 24px;
+}
+
+.panelFoot {
+  padding: 14px 24px calc(14px + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(176, 141, 87, 0.3);
+}
+
+.panelFoot :global(.btn) {
+  width: 100%;
+}
+
+.iconBtn {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.iconBtn:hover {
+  background: rgba(176, 141, 87, 0.16);
+}
+
+.iconBtn svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ───────── Popover ───────── */
+
+.popover {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: -12px;
+  z-index: 30;
+  width: max-content;
+  max-width: min(440px, calc(100vw - 32px));
+  padding: 16px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 28px 50px -30px rgba(70, 40, 20, 0.6);
+  font-family: var(--sans);
+  font-style: normal;
+  text-align: left;
+}
+
+/* ───────── Choice chips (real checkboxes / radios underneath) ───────── */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.chipsLegend {
+  margin-bottom: 10px;
+  padding: 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a6a38;
+}
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 16px;
+  border: 1px solid rgba(176, 141, 87, 0.5);
+  border-radius: 99px;
+  background: var(--cream);
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  user-select: none;
+  transition:
+    background 0.2s,
+    border-color 0.2s,
+    color 0.2s;
+}
+
+.chip::before {
+  /* 44px hit area around a 40px chip */
+  content: '';
+  position: absolute;
+  inset: -2px;
+}
+
+.chip:hover {
+  border-color: var(--maroon);
+}
+
+.chip input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chip:has(input:checked) {
+  border-color: var(--maroon);
+  background: var(--maroon);
+  color: var(--paper);
+}
+
+.chip:has(input:focus-visible) {
+  outline: 2px solid var(--maroon);
+  outline-offset: 3px;
+}
+
+.chipCount {
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+.swatch {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 1px rgba(42, 30, 26, 0.18),
+    0 0 0 2px var(--paper);
+}
+
+.sw_royal {
+  background: #6b1e2e;
+}
+
+.sw_forest {
+  background: #2a4c3a;
+}
+
+.sw_gold {
+  background: #c9a15e;
+}
+
+.sw_ivory {
+  background: #f3ead8;
+}
+
+.sw_blush {
+  background: #e9c4bd;
+}
+
+/* ───────── Small text button ───────── */
+
+.textBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.textBtn:hover {
+  color: var(--maroon-deep);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.textBtn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a6a38;
+}
+
+.field input {
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(176, 141, 87, 0.55);
+  border-radius: 6px;
+  background: var(--cream);
+  font: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  caret-color: var(--maroon);
+}
+
+.field input::placeholder {
+  color: #8c7a6c;
+}
+
+.field input:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 1px;
+}

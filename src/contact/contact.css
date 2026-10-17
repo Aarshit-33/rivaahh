@@ -1,0 +1,431 @@
+/* ───────── 3D envelope canvas ───────── */
+
+.env3d {
+  position: relative;
+}
+
+.env3d canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Without WebGL: a soft gold glow stands in for the envelope. */
+.env3d.is-fallback {
+  background: radial-gradient(closest-side, rgba(243, 199, 122, 0.35), rgba(243, 199, 122, 0));
+}
+
+/* ───────── Home: contact section ───────── */
+
+.csec {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 4vw;
+  background:
+    radial-gradient(50% 60% at 25% 50%, rgba(243, 199, 122, 0.22), rgba(243, 199, 122, 0) 70%),
+    var(--paper);
+  border-top: 1px solid rgba(176, 141, 87, 0.25);
+}
+
+.csec-env {
+  height: min(62vh, 520px);
+}
+
+.csec-channels {
+  display: grid;
+  gap: 0;
+  margin: 34px 0 32px;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(176, 141, 87, 0.35);
+}
+
+.csec-channels li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid rgba(176, 141, 87, 0.35);
+}
+
+.csec-ch-label {
+  font-family: var(--serif);
+  font-size: 22px;
+}
+
+.csec-channels a {
+  font-weight: 600;
+  color: var(--maroon);
+}
+
+.csec-ch-tbc,
+.cp-ch-tbc {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 15px;
+  color: #8a6a38;
+}
+
+.csec .btn span {
+  display: inline-block;
+  margin-left: 10px;
+  transition: translate 0.3s;
+}
+
+.csec .btn:hover span {
+  translate: 4px 0;
+}
+
+/* ───────── Contact page ─────────
+   One vertical rhythm for every section: --cp-pad-y between sections,
+   --cp-head-gap under each heading. */
+
+.cp {
+  --cp-pad-y: clamp(88px, 11vw, 152px);
+  --cp-head-gap: clamp(40px, 4.5vw, 64px);
+  --cp-line: rgba(176, 141, 87, 0.35);
+  background: var(--cream);
+}
+
+.cp-sec {
+  padding: var(--cp-pad-y) var(--gutter);
+  border-top: 1px solid var(--cp-line);
+}
+
+.cp-head {
+  max-width: 40rem;
+  margin-bottom: var(--cp-head-gap);
+}
+
+/* Hero */
+
+.cp-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: clamp(48px, 6vw, 112px);
+  padding: clamp(112px, 14vh, 148px) var(--gutter) var(--cp-pad-y);
+  background: radial-gradient(40% 55% at 22% 40%, rgba(243, 199, 122, 0.2), rgba(243, 199, 122, 0) 70%);
+}
+
+.cp-copy {
+  max-width: 34rem;
+}
+
+.cp-copy .display {
+  font-size: clamp(42px, 4.6vw, 76px);
+}
+
+.cp-copy .sec-lede {
+  margin-top: 28px;
+}
+
+.cp-jump {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 40px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid currentColor;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--maroon);
+  text-decoration: none;
+}
+
+.cp-jump span {
+  transition: translate 0.3s;
+}
+
+.cp-jump:hover span {
+  translate: 0 3px;
+}
+
+/* Form card */
+
+.cp-card {
+  width: 100%;
+  max-width: 640px;
+  justify-self: end;
+  padding: clamp(28px, 3.2vw, 48px);
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 40px 70px -40px rgba(70, 40, 20, 0.45);
+}
+
+.cp-form h2,
+.cp-done h2 {
+  margin: 0;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 2.4vw, 38px);
+}
+
+.cp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px 20px;
+  margin: 32px 0;
+}
+
+.cp-field {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.cp-field--wide {
+  grid-column: 1 / -1;
+}
+
+.cp-field > span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #8a6a38;
+}
+
+.cp-field input,
+.cp-field textarea {
+  width: 100%;
+  min-height: 52px;
+  padding: 13px 16px;
+  border: 1px solid rgba(176, 141, 87, 0.55);
+  border-radius: 10px;
+  background: var(--cream);
+  font: 500 16px var(--sans);
+  color: var(--ink);
+  resize: vertical;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.cp-field input:focus,
+.cp-field textarea:focus {
+  outline: none;
+  border-color: var(--maroon);
+  box-shadow: 0 0 0 4px rgba(107, 30, 46, 0.1);
+}
+
+.cp-field.has-error input,
+.cp-field.has-error textarea {
+  border-color: #a3283b;
+}
+
+.cp-field em {
+  font-size: 13px;
+  font-style: normal;
+  color: #a3283b;
+}
+
+.cp-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.cp-submit {
+  width: 100%;
+}
+
+.cp-done {
+  display: grid;
+  justify-items: center;
+  gap: 20px;
+  padding: 24px 0;
+  text-align: center;
+}
+
+.cp-done p {
+  max-width: 34em;
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.cp-done blockquote {
+  max-width: 34em;
+  margin: 0;
+  padding: 16px 20px;
+  border-left: 3px solid var(--gold);
+  background: var(--cream);
+  font-family: var(--serif);
+  font-style: italic;
+  text-align: left;
+}
+
+/* Other ways to reach us */
+
+.cp-ways {
+  background: var(--paper);
+}
+
+.cp-channels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cp-channels li {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  gap: 12px;
+  min-height: 200px;
+  padding: clamp(24px, 2.4vw, 36px);
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  border-radius: 14px;
+  background: var(--cream);
+  transition: border-color 0.25s;
+}
+
+.cp-channels li:hover {
+  border-color: var(--maroon);
+}
+
+.cp-ch-label {
+  font-family: var(--serif);
+  font-size: clamp(24px, 2vw, 30px);
+}
+
+.cp-ch-note {
+  max-width: 22em;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.cp-ch-value {
+  font-weight: 700;
+  color: var(--maroon);
+}
+
+.cp-channels .cp-ch-tbc {
+  padding-top: 16px;
+  border-top: 1px solid var(--cp-line);
+}
+
+/* What happens next */
+
+.cp-next {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(48px, 6vw, 112px);
+}
+
+.cp-env {
+  height: min(64vh, 520px);
+}
+
+.cp-steps {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--cp-line);
+}
+
+.cp-steps li {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 20px;
+  padding: 28px 0;
+  border-bottom: 1px solid var(--cp-line);
+}
+
+.cp-step-n {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 22px;
+  color: var(--gold);
+}
+
+.cp-steps h3 {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(22px, 1.8vw, 26px);
+}
+
+.cp-steps p {
+  max-width: 32em;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* Quick answers */
+
+.cp-faq {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: start;
+  gap: clamp(48px, 6vw, 112px);
+  background: var(--paper);
+}
+
+.cp-faq .cp-head {
+  margin-bottom: 0;
+}
+
+/* ───────── Tablet ───────── */
+
+@media (max-width: 1100px) {
+  .cp-hero {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-copy {
+    max-width: 40rem;
+  }
+
+  .cp-card {
+    max-width: none;
+    justify-self: stretch;
+  }
+
+  .cp-jump {
+    display: none;
+  }
+}
+
+/* ───────── Phone ───────── */
+
+@media (max-width: 900px) {
+  .csec {
+    grid-template-columns: 1fr;
+  }
+
+  .csec-env {
+    height: 300px;
+  }
+
+  .cp-hero {
+    padding-top: 104px;
+  }
+
+  .cp-channels,
+  .cp-next,
+  .cp-faq {
+    grid-template-columns: 1fr;
+  }
+
+  .cp-channels li {
+    min-height: 0;
+  }
+
+  .cp-env {
+    height: 280px;
+  }
+
+  .cp-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,763 @@
+/* Shelves, the ranked staggered wall, interlude slots and the empty state. */
+
+/* ───────── Shelves (no filters) ───────── */
+
+.shelves {
+  display: grid;
+  /* minmax(0, 1fr): a swipe row inside must never widen the page. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: 60px;
+}
+
+.shelf {
+  min-width: 0;
+}
+
+.shelfHead {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 4px 20px;
+  margin-bottom: 20px;
+}
+
+.shelfTitles {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.shelfTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.shelfCount {
+  font-size: 13px;
+  color: var(--muted);
+  font-variant-numeric: lining-nums;
+}
+
+.shelfNote {
+  grid-column: 1;
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.shelfLink {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.shelfLink svg,
+.bannerLink svg,
+.shelfMoreLink svg {
+  width: 16px;
+  height: 16px;
+  transition: translate 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.shelfLink:hover svg,
+.bannerLink:hover svg,
+.shelfMoreLink:hover svg {
+  translate: 4px 0;
+}
+
+.shelfLink:hover {
+  color: var(--maroon-deep);
+}
+
+.shelfRow {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.shelfItem {
+  min-width: 0;
+}
+
+.shelfItem:nth-child(n + 7) {
+  display: none;
+}
+
+.shelfMore {
+  display: none;
+}
+
+.shelfMoreLink {
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 8px;
+  aspect-ratio: 9 / 16;
+  border: 1px dashed rgba(176, 141, 87, 0.7);
+  border-radius: 14px;
+  background: var(--paper);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--maroon);
+  text-decoration: none;
+}
+
+.shelfMoreCount {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* ───────── Shared shortlist banner ───────── */
+
+.shared {
+  margin-bottom: 60px;
+  padding: 32px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 14px;
+  background: var(--paper);
+}
+
+.sharedHead {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.sharedTag {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #8a6a38;
+}
+
+.sharedTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(24px, 2.4vw, 32px);
+  font-weight: 400;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.sharedTitle em {
+  font-style: italic;
+  color: var(--maroon);
+}
+
+.sharedText {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: var(--muted);
+}
+
+.sharedActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shared .shelfItem:nth-child(n + 7) {
+  display: block;
+}
+
+/* ───────── The ranked, staggered wall ───────── */
+
+.wallWrap {
+  position: relative;
+}
+
+.banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 20px;
+  margin: 0 0 32px;
+  padding: 12px 12px 12px 20px;
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  border-radius: 99px;
+  background: rgba(251, 246, 236, 0.7);
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink);
+}
+
+.banner em {
+  font-style: italic;
+}
+
+.bannerLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 16px;
+  border-radius: 99px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--maroon);
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.bannerLink:hover {
+  background: rgba(107, 30, 46, 0.07);
+}
+
+.wall {
+  --stagger: 64px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  column-gap: 24px;
+  row-gap: 32px;
+  margin: 0;
+  padding: 0 0 var(--stagger);
+  list-style: none;
+}
+
+.cell {
+  min-width: 0;
+}
+
+.cellInner {
+  transition: translate 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Every second column sits lower, like reels pinned to a wall. DOM order is
+   the ranking; the offset is purely visual. 6, 4 and 2 columns: even items. */
+.wall > .cell:nth-child(even) > .cellInner {
+  translate: 0 var(--stagger);
+}
+
+.wallFlat {
+  --stagger: 0px;
+}
+
+.others {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  margin-top: 32px;
+  text-align: center;
+}
+
+.othersRule {
+  width: min(320px, 60%);
+  height: 1px;
+  background: rgba(176, 141, 87, 0.45);
+}
+
+.others p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--ink);
+}
+
+.othersBtn {
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-style: italic;
+  color: var(--maroon);
+  text-decoration: underline dotted rgba(176, 141, 87, 0.9);
+  text-underline-offset: 6px;
+  text-decoration-thickness: 1.5px;
+  cursor: pointer;
+}
+
+/* ───────── Interlude slots ───────── */
+
+.interlude {
+  min-width: 0;
+}
+
+.slot {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  aspect-ratio: 9 / 16;
+  padding: 20px 16px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 14px;
+  background: var(--paper);
+  box-shadow: 0 24px 40px -28px rgba(70, 40, 20, 0.5);
+  text-align: center;
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.slotForest {
+  border-color: rgba(201, 168, 106, 0.5);
+  background: radial-gradient(80% 60% at 50% 30%, #2a4c3a, var(--forest) 70%);
+  color: #f1e3c3;
+}
+
+.slotSpark {
+  width: 22px;
+  height: 22px;
+  color: var(--gold);
+}
+
+.slotTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(19px, 12cqw, 24px);
+  font-weight: 400;
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.slotTitle em {
+  font-style: italic;
+  color: var(--maroon);
+}
+
+.slotForest .slotTitle {
+  color: #f6ead0;
+}
+
+.slotText {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.slotBtn {
+  margin-top: 8px;
+  padding: 0 16px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+.slotMeta {
+  margin-top: 12px;
+}
+
+.slotMeta p {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.slotMeta span {
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Any language */
+
+.langStage {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 46%;
+}
+
+.langCard {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+}
+
+.langEyebrow {
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: #c9a86a;
+}
+
+.langTitle {
+  font-family: var(--serif);
+  font-size: clamp(20px, 13cqw, 26px);
+  line-height: 1.2;
+  color: #f6ead0;
+}
+
+.langMeta {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(241, 227, 195, 0.8);
+}
+
+.langList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.langList button {
+  min-height: 32px;
+  padding: 0 6px;
+  border: 0;
+  border-radius: 99px;
+  background: none;
+  font: inherit;
+  font-size: 12px;
+  color: rgba(241, 227, 195, 0.7);
+  cursor: pointer;
+}
+
+.langList .langOn {
+  background: rgba(241, 227, 195, 0.14);
+  color: #f6ead0;
+}
+
+.langList button:focus-visible {
+  outline-color: #f1e3c3;
+}
+
+/* Start from a colour */
+
+.swatchStack {
+  display: grid;
+  gap: 4px;
+  width: 100%;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.swatchBtn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 44px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 99px;
+  background: none;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.swatchBtn:hover,
+.swatchBtn[aria-pressed='true'] {
+  background: rgba(176, 141, 87, 0.14);
+}
+
+.swatchBig {
+  width: 28px;
+  height: 28px;
+}
+
+.swatchArrow {
+  width: 14px;
+  height: 14px;
+  margin-left: auto;
+  color: var(--gold);
+}
+
+/* ───────── Empty state ───────── */
+
+.empty {
+  padding: 60px 0 0;
+  text-align: center;
+}
+
+.emptyTitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 44px);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.emptyTitle em {
+  font-style: italic;
+  color: var(--maroon);
+}
+
+.emptyText {
+  margin: 12px auto 0;
+  max-width: 34em;
+  font-size: 16px;
+  color: var(--muted);
+}
+
+.relax {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 32px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.relaxChip {
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(107, 30, 46, 0.5);
+  border-radius: 99px;
+  background: var(--paper);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--maroon);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.relaxChip span {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.relaxChip:hover {
+  background: rgba(107, 30, 46, 0.07);
+}
+
+.relaxAll {
+  border-color: var(--maroon);
+  background: var(--maroon);
+  color: var(--paper);
+}
+
+.relaxAll:hover {
+  background: var(--maroon-deep);
+}
+
+.closestTitle {
+  margin: 96px 0 32px;
+  font-family: var(--serif);
+  font-size: 28px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+.empty .wall {
+  text-align: left;
+}
+
+/* ───────── Responsive ───────── */
+
+@media (max-width: 1439px) {
+  .wall,
+  .shelfRow {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .shelfItem:nth-child(n + 6) {
+    display: none;
+  }
+
+  /* 5 columns: columns 2 and 4 sit lower */
+  .wall > .cell:nth-child(even) > .cellInner {
+    translate: 0 0;
+  }
+
+  .wall > .cell:nth-child(5n + 2) > .cellInner,
+  .wall > .cell:nth-child(5n + 4) > .cellInner {
+    translate: 0 var(--stagger);
+  }
+}
+
+@media (max-width: 1199px) {
+  .wall,
+  .shelfRow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: 20px;
+  }
+
+  .shelfItem:nth-child(n + 5) {
+    display: none;
+  }
+
+  .wall > .cell:nth-child(5n + 2) > .cellInner,
+  .wall > .cell:nth-child(5n + 4) > .cellInner {
+    translate: 0 0;
+  }
+
+  .wall > .cell:nth-child(even) > .cellInner {
+    translate: 0 var(--stagger);
+  }
+}
+
+@media (max-width: 767px) {
+  .shelves {
+    gap: 40px;
+  }
+
+  .shelfHead {
+    margin-bottom: 12px;
+  }
+
+  .shelfTitle {
+    font-size: 24px;
+  }
+
+  .shelfNote {
+    font-size: 13px;
+  }
+
+  .shelfLink {
+    grid-row: 1;
+    align-self: baseline;
+  }
+
+  .shelfRow {
+    display: flex;
+    gap: 12px;
+    margin-inline: calc(-1 * var(--gutter));
+    padding: 4px var(--gutter) 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+
+  .shelfRow::-webkit-scrollbar {
+    display: none;
+  }
+
+  .shelfItem,
+  .shelfItem:nth-child(n + 5),
+  .shelfMore {
+    display: block;
+    flex: none;
+    width: 150px;
+    scroll-snap-align: start;
+  }
+
+  .shared {
+    padding: 20px;
+  }
+
+  .sharedHead {
+    flex-direction: column;
+  }
+
+  .wall {
+    --stagger: 40px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 12px;
+    row-gap: 20px;
+  }
+
+  .banner {
+    border-radius: 14px;
+    font-size: 16px;
+  }
+
+  .bannerLink {
+    padding: 0;
+  }
+
+  .slot {
+    padding: 14px 10px;
+    gap: 8px;
+  }
+
+  .slotText {
+    font-size: 12px;
+  }
+
+  .slotBtn {
+    min-height: 40px;
+    padding: 0 10px;
+    font-size: 10px;
+  }
+
+  .swatchBtn {
+    min-height: 40px;
+    gap: 8px;
+    font-size: 13px;
+  }
+
+  .swatchBig {
+    width: 22px;
+    height: 22px;
+  }
+
+  .closestTitle {
+    margin-top: 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cellInner {
+    transition: none;
+  }
+}
+
+/* Phones: the "See all …" link drops under the shelf title so long occasion
+   names never push it past the screen edge. */
+@media (max-width: 640px) {
+  .shelfHead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .shelfLink {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+    white-space: normal;
+  }
+}
+
+.emptyText a {
+  color: var(--maroon);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}

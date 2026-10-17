@@ -1,0 +1,192 @@
+/* The themed background of the home "Occasions" section. */
+
+.backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.layer {
+  position: absolute;
+  inset: 0;
+}
+
+.tint {
+  position: absolute;
+  inset: 0;
+}
+
+/* A decoration hanging from the top edge (bunting, garland, toran). */
+.strip {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 170px;
+}
+
+.stripTall {
+  height: 260px;
+}
+
+/* Scattered decorations over the whole section. */
+.field {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.string {
+  fill: none;
+  stroke: #8a6a38;
+  stroke-width: 2;
+}
+
+.stringGold {
+  fill: none;
+  stroke: #b08d57;
+  stroke-width: 3;
+}
+
+.flagLetter {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 600;
+}
+
+/* Large faint script words, kept to the right so the copy stays clear. */
+.script {
+  position: absolute;
+  right: var(--gutter);
+  bottom: 6%;
+  margin: 0;
+  font-family: var(--script);
+  font-size: clamp(48px, 6vw, 96px);
+  line-height: 1;
+  color: rgba(107, 30, 46, 0.12);
+  white-space: nowrap;
+}
+
+/* Above the fan of cards, on one line. */
+.babyWords {
+  position: absolute;
+  right: var(--gutter);
+  top: 7%;
+  display: grid;
+  justify-items: end;
+  font-family: var(--script);
+  line-height: 0.95;
+}
+
+.babyLine {
+  margin: 0;
+  white-space: nowrap;
+}
+
+.babyBoy,
+.babyGirl {
+  font-size: clamp(44px, 5vw, 76px);
+}
+
+.babyBoy {
+  color: rgba(96, 145, 196, 0.45);
+}
+
+.babyGirl {
+  color: rgba(214, 112, 146, 0.45);
+}
+
+.babyOr {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(20px, 2vw, 30px);
+  color: rgba(107, 30, 46, 0.3);
+}
+
+.babySoon {
+  margin-top: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(107, 30, 46, 0.35);
+}
+
+/* Gentle life. */
+.sway {
+  transform-origin: 50% 0;
+  animation: sway 6s ease-in-out infinite alternate;
+}
+
+.float {
+  animation: float 5s ease-in-out infinite alternate;
+}
+
+.flame {
+  transform-box: fill-box;
+  transform-origin: 50% 100%;
+  animation: flicker 1.6s ease-in-out infinite alternate;
+}
+
+@keyframes sway {
+  from {
+    transform: rotate(-0.4deg);
+  }
+  to {
+    transform: rotate(0.4deg);
+  }
+}
+
+@keyframes float {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: 0 -10px;
+  }
+}
+
+@keyframes flicker {
+  from {
+    transform: scaleY(0.9);
+  }
+  to {
+    transform: scaleY(1.1);
+  }
+}
+
+/* Phones: decorations sit behind the stacked layout; keep them quieter. */
+@media (max-width: 767px) {
+  .strip {
+    height: 110px;
+  }
+
+  .stripTall {
+    height: 170px;
+  }
+
+  .field {
+    opacity: 0.7;
+  }
+
+  .script {
+    bottom: 2%;
+  }
+
+  .babyWords {
+    top: auto;
+    bottom: 4%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sway,
+  .float,
+  .flame {
+    animation: none;
+  }
+}

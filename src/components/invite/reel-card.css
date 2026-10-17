@@ -1,0 +1,177 @@
+/* A template as a 9:16 card (shared by the templates wall, category pages and
+   the showcase's "others in the same spirit" row). */
+
+.rc {
+  position: relative;
+  min-width: 0;
+  transition: opacity 0.4s;
+}
+
+.rc--dim {
+  opacity: 0.5;
+}
+
+.rc-poster {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  border-radius: 14px;
+  box-shadow:
+    0 24px 40px -28px rgba(70, 40, 20, 0.5),
+    0 0 0 1px rgba(176, 141, 87, 0.3);
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.rc:hover .rc-poster,
+.rc:focus-within .rc-poster {
+  transform: translateY(-4px);
+  box-shadow:
+    0 36px 60px -30px rgba(70, 40, 20, 0.55),
+    0 0 0 1px rgba(176, 141, 87, 0.45);
+}
+
+.rc-link {
+  position: absolute;
+  inset: 0;
+  display: block;
+  overflow: hidden;
+  border-radius: 14px;
+}
+
+.rc-link:focus-visible {
+  outline: 2px solid var(--maroon);
+  outline-offset: 3px;
+}
+
+.rc-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border-radius: 99px;
+  background: rgba(251, 246, 236, 0.92);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+  pointer-events: none;
+}
+
+.rc-badge svg {
+  width: 8px;
+  height: 8px;
+  color: var(--maroon);
+}
+
+.rc-heart {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--paper);
+  cursor: pointer;
+}
+
+.rc-heart svg {
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  border-radius: 50%;
+  background: rgba(42, 30, 26, 0.38);
+  transition:
+    transform 0.25s,
+    background 0.25s;
+}
+
+.rc-heart:hover svg {
+  transform: scale(1.08);
+}
+
+.rc-heart.is-on svg {
+  background: var(--paper);
+  color: var(--maroon);
+}
+
+.rc-best {
+  position: absolute;
+  top: 44px;
+  left: 10px;
+  padding: 5px 9px;
+  border-radius: 99px;
+  background: var(--maroon);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper);
+  pointer-events: none;
+}
+
+.rc-why {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -12px;
+  padding: 4px 10px;
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  border-radius: 4px;
+  background: var(--paper);
+  box-shadow: 0 8px 16px -10px rgba(70, 40, 20, 0.5);
+  font-family: var(--hand);
+  font-size: 17px;
+  line-height: 1.2;
+  color: #8a6a38;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  rotate: -1deg;
+  pointer-events: none;
+}
+
+.rc-meta {
+  margin-top: 12px;
+}
+
+.rc-why ~ * {
+  margin-top: 0;
+}
+
+.rc:has(.rc-why) .rc-meta {
+  margin-top: 22px;
+}
+
+.rc-meta h3 {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 16px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rc-meta a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.rc-meta p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
