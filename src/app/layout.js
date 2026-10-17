@@ -9,6 +9,7 @@ import Nav from '@/nav/Nav'
 import { Footer } from '@/sections/Closing'
 import SmoothScroll from '@/components/SmoothScroll'
 import { SITE } from '@/data/site'
+import { Analytics } from '@vercel/analytics/next'
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -63,6 +64,7 @@ export default function RootLayout({ children }) {
         <Nav />
         <main id="main">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   )
