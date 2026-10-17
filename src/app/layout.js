@@ -10,6 +10,7 @@ import { Footer } from '@/sections/Closing'
 import SmoothScroll from '@/components/SmoothScroll'
 import { SITE } from '@/data/site'
 import { Analytics } from '@vercel/analytics/next'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 export const metadata = {
   metadataBase: new URL(SITE.url),
@@ -65,6 +66,7 @@ export default function RootLayout({ children }) {
         <main id="main">{children}</main>
         <Footer />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   )
